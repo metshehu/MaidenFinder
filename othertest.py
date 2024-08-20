@@ -31,11 +31,14 @@ async def main():
 
     browser2 = await launch()
     page2 = await browser2.newPage()
-
-    await page2.goto(img_src_3)
-    await page2.waitFor(1000)
-
-    await page2.screenshot({"path": "fyou.png"})
+    x = 0
+    for i in img_elements[:20]:
+        cImg = await (await i.getProperty("src")).jsonValue()
+        await page2.goto(cImg)
+        await page2.waitFor(1000)
+        text = "test" + str(x)+".png"
+        await page2.screenshot({"path": text})
+        x += 1
 
 
 asyncio.get_event_loop().run_until_complete(main())
