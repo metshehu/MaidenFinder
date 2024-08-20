@@ -1,0 +1,41 @@
+so atm what i am doing in othertest.py (willl rename soon)
+is ime going to the page geting the src of the img open another broewn then 
+going to that src and taking a sc 
+so its shittt but its okay 
+
+so now some solusion
+||||||||||||
+\/\/\/\/\/\/
+------------ 
+Nr1 -
+so we can go the page load it after we load it 
+we can zoom in and take a screen shot then resetit scroll up to 00 and rense and repets this will take time 
+but will give us heigher def photos 
+-----------
+Nr2 -
+we can save this src into a file or in ram and then load them direlcit after we parse the html
+then just go the link and sc but idk if instagram has somthing agents that or we will have to see but it should be okay 
+-----------
+
+
+
+
+Must have fetures 
+
+||||||||||||
+\/\/\/\/\/\/
+-----------
+Nr1 beaing able to scroll as i have seen in the dosc this is not a problem cuz we can go to the page 
+wait for it to load scroll to the bottme wtih some delyses (bot detescion reducion)
+and then parse the imgs and load them 
+-----------
+Nr2 
+beaing able to go to the follow and make a tree and and repet this proces on the followrs 
+we will have to log in and then we can start doing it 
+i saw you can send request headsers so some insgram api testing have to be donse 
+then run a Breath 1 search or a deepth 1 search to find the produects 
+--------
+Nr3 
+then start bulind the netwerok for detatcion  and filting of the datat 
+this will be allabreatupon after this 1 one are done 
+-----
