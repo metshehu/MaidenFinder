@@ -2,9 +2,12 @@ import asyncio
 
 from playwright.async_api import async_playwright
 
+from GetCockysInstagram import Nlogin, login
+from HelperFuncsions import ExtractImgs
+from PlayWirghtCockkcys import login_and_get_session
 
-async def scrape_user(username: str):
-    """Scrape Instagram user's data using Playwright."""
+
+async def scrape_user(username: str, login_cookie: str):
     async with async_playwright() as p:
         # Start a browser instance
         browser = await p.chromium.launch(headless=True)
@@ -14,7 +17,8 @@ async def scrape_user(username: str):
 
         # Create a new page
         page = await context.new_page()
-
+        # if login_cookie != None:
+        #     await context.add_cookies(login_cookie)
         # Make the request to Instagram API
         response = await page.request.get(
             f"https://i.instagram.com/api/v1/users/web_profile_info/?username={
@@ -59,31 +63,38 @@ async def parseSrc(thumbnail_resources):
 
 
 async def parse(data):
-    #    print(data["edges"]["thumbnail_resources"])
-    allData=[]
+    #    # print(data["edges"]["thumbnail_resources"])
+    allData = []
     data = data["edge_owner_to_timeline_media"]["edges"]
     for i in data:
         allData.append(await parseSrc(i["node"]["thumbnail_resources"]))
-    print(len(data))
+    # # print(len(data))
     return allData
 
 
 async def main():
-    username = "mettusha8"  # Replace with the desired Instagram username
-    user_data = await scrape_user(username)
+    username = "michaeljohnsonth3@gmail.com"
+    password = "helloitsme1234"
+    username = "gjirafa50"  # Replace with the desired Instagram username
+    # username = "redonblakajj"  # Replace with the desired Instagram username
+    cook = await Nlogin(loginuser, password)
+    user_data = await scrape_user(username, cook)
 
     if user_data:
         # print(user_data)
-        a = await parse(user_data)
-        for i in a:
-            print(i)
-            print("\n")
+        userphotos = await parse(user_data)
+        print(userphotos)
+        testinga = await ExtractImgs(userphotos, "Redon", "png")
 
-        print(a)
+        # logi = await login(loginuser, password)
+        # OtherLogin = await Nlogin(loginuser, password)
+
+        # # print(a)
     else:
         print("No user data retrieved.")
 
+    # Run the main function
 
-# Run the main function
+
 if __name__ == "__main__":
     asyncio.run(main())
