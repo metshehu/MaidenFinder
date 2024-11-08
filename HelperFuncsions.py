@@ -6,17 +6,14 @@ from playwright.async_api import async_playwright
 
 async def ExtractImgs(img_elements, Path, Dtype):
     async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=False)
+        browser = await playwright.chromium.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
         Addon = 0
-        # print(img_elements)
         for img in img_elements:
             if img and (img.startswith("http://") or img.startswith("https://")):
-                # Navigate to the image URL and take a screenshot
                 await page.goto(img)
                 path = f"{Path}{Addon}.{Dtype}"
-                # print(img)
                 await page.screenshot(path=path)
                 Addon += 1
 
@@ -32,7 +29,6 @@ async def ExtractImgsFromHTMl(img_elements, Path, Dtype):
         for img in img_elements:
             cImg = await img.get_attribute("src")
             if cImg and (cImg.startswith("http://") or cImg.startswith("https://")):
-                # Navigate to the image URL and take a screenshot
                 await page.goto(cImg)
                 path = f"{Path}{Addon}.{Dtype}"
                 print(cImg)
@@ -52,12 +48,10 @@ async def ExtractImgsPWI(PlayWrightInstcace, img_elements):
     for img in img_elements:
         cImg = await img.get_attribute("src")
         if cImg and (cImg.startswith("http://") or cImg.startswith("https://")):
-            # Navigate to the image URL and take a screenshot
             await page2.goto(cImg)
             path = f"{starting_text}{Addon}.png"
             print(cImg)
             f.write("hello its me ")
-
             await page2.screenshot(path=path)
             Addon += 1
 

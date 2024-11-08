@@ -4,6 +4,12 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
+""" 
+This is for login and geting Istagem Cookie to use Instagram APIS
+insted of maunaly web scrabing but still havent been able to find 
+instagram apis that works instagram/users/followrs dosatn aceepte skill issue by MetiThiccc sadly 
+"""
+
 
 async def login(username, password):
     """Login to Instagram"""
@@ -98,38 +104,7 @@ async def Nlogin(username, password):
     return cookies
 
 
-async def CRFT_Challange(username, password):
-    session = requests.session()
-    time = str(int(datetime.datetime.now().timestamp()))
-    # pip3 install requests beautifulsoup4
-
-    # the URL of the login page
-    login_url = "https://www.scrapingcourse.com/login/csrf"
-
-    # the payload with your login credentials
-    payload = {
-        "email": username,
-        "password": password,
-    }
-
-    # send the POST request to login
-    response = requests.post(login_url, data=payload)
-
-    # if the request went Ok, you should get a 200 status
-    print(f"Status code: {response.status_code}")
-
-    # parse the HTML content using BeautifulSoup
-    soup = BeautifulSoup(response.text, "html.parser")
-
-    # find the page title
-    page_title = soup.title.string
-
-    # print the result page title
-    print(f"Page title: {page_title}")
-
-
 async def main():
-    # print(await CRFT_Challange("admin@example.com", "password"))
     print(await login("", "helloitsme1234"))
     print("other")
     print(await Nlogin("", "helloitsme1234"))

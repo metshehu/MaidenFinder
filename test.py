@@ -1,33 +1,24 @@
-import requests
+from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
-BASE_URL = 'https://www.instagram.com/'
-LOGIN_URL = BASE_URL + 'accounts/login/ajax/'
-USERNAME = '******'
-PASSWD = '*****'
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)\
- Chrome/59.0.3071.115 Safari/537.36'
+with sync_playwright() as p:
 
-session = requests.Session()
-session.headers = {'user-agent': USER_AGENT}
-session.headers.update({'Referer': BASE_URL})
+    browser = p.chromium.launch(headless=False)
+    page = browser.new_page()
 
+    # Replace with the URL of the page you want to check
+    # page.goto("https://www.instagram.com/liburn.bajraktari/")
 
-req = session.get(BASE_URL)
+    page.goto("https://www.instagram.com/spamiririt/")
+    page.wait_for_load_state(state='load', timeout=30000)
 
-session.headers.update({'X-CSRFToken': req.cookies['csrftoken']})
-login_data = {'username': USERNAME, 'password': PASSWD}
-login = session.post(LOGIN_URL, data=login_data, allow_redirects=True)
-session.headers.update({'X-CSRFToken': login.cookies['csrftoken']})
+    # Check if the text "This account is private" exists anywhere on the page
 
-cookies = login.cookies
+    response = page.content()
+    soup = BeautifulSoup(str(response), "html.parser")
+    if "This account is private" in soup.get_text():
+        print("yes")
+    else:
+        print("no")
 
-print(login.text)
-
-check = '"authenticated": true'
-
-current_result = login.text
-
-if check in current_result:
-    print("correct")
-else:
-    print("wrong")
+    browser.close()

@@ -7,19 +7,14 @@ from HelperFuncsions import ExtractImgs
 from PlayWirghtCockkcys import login_and_get_session
 
 
-async def scrape_user(username: str, login_cookie: str):
+async def scrape_user(username: str):
     async with async_playwright() as p:
-        # Start a browser instance
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
         )
 
-        # Create a new page
         page = await context.new_page()
-        # if login_cookie != None:
-        #     await context.add_cookies(login_cookie)
-        # Make the request to Instagram API
         response = await page.request.get(
             f"https://i.instagram.com/api/v1/users/web_profile_info/?username={
                 username}",
@@ -33,7 +28,6 @@ async def scrape_user(username: str, login_cookie: str):
             },
         )
 
-        # Check if the request was successful
         if response.status != 200:
             print(
                 f"Failed to fetch user data: {
@@ -72,14 +66,17 @@ async def parse(data):
     return allData
 
 
-async def main():
-    username = "michaeljohnsonth3@gmail.com"
-    password = "helloitsme1234"
-    username = "gjirafa50"  # Replace with the desired Instagram username
-    # username = "redonblakajj"  # Replace with the desired Instagram username
-    cook = await Nlogin(loginuser, password)
-    user_data = await scrape_user(username, cook)
+async def getImgs(username: str):
+    user_data = await scrape_user(username)
+    photoLinks = await parse(user_data)
+    ex = await ExtractImgs(photoLinks, "fyouTest", "png")
+    return ex
+    #return photoLinks
 
+
+async def main():
+    username = "sun_tzu_bab"
+    user_data = await scrape_user(username)
     if user_data:
         # print(user_data)
         userphotos = await parse(user_data)
@@ -97,4 +94,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    a=asyncio.run(getImgs("mettusha8"))
+    print(a)
+    
