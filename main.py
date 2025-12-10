@@ -7,7 +7,7 @@ from HelperFuncsions import ExtractImgs
 from Parsers import get_images_in_div, getPrivateState, pageFollowers, pageParser
 from RequestHanlderBase import getImgs
 
-NAME = "sun_tzu_bab"
+NAME = "dhjetoriii"
 username = "suttonelara@gmail.com"
 password = "helloitsme1234"
 
